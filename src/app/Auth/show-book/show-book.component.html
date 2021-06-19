@@ -1,0 +1,122 @@
+<app-header></app-header>
+
+<div class="conatiner p-5 mt-5">
+   
+<div class="row col-12">
+    <div class="col-12 mb-2 row p-2">
+        <div class="col-12 row">
+            <div class="col-6" >
+                <div class="card">
+                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                      <img 
+                        src="http://127.0.0.1:8000/uploads/livres/cover/{{ book.cover }}"
+                        class="img-fluid"
+                      />
+                      <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                      </a>
+                    </div>
+                    <div class="card-body">
+                       
+                      <h5 class="card-title">Title : {{ book.name }}</h5>
+                
+                  
+                      <h5>Description : </h5>
+                      <p class="card-text">
+                        {{ book.description  }}
+                      </p>
+                      <h5> {{ book.edition }} </h5>
+                      <h5> Langue : {{ book.langue }} </h5>
+                      <h5> Type : {{ book.type }} </h5>
+
+                
+                        
+                    
+                    </div>
+
+                    <div class="card-footer">
+                      <audio controls *ngIf="book.son">
+                       
+                        <source src="http://127.0.0.1:8000/uploads/livres/son/{{ book.son }}" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                      </audio>
+
+                      <a href="http://127.0.0.1:8000/uploads/livres/pdf/{{ book.pdf }}" class="btn btn-primary" *ngIf="book.pdf">Afficher PDF</a>
+                       
+                    </div>
+
+                  
+                  </div>
+               </div>
+             <div class="col-6">
+              <h3>Commentaires</h3>
+              <hr />
+              <div class="p-2">
+                <form #commentForm="ngForm" (ngSubmit)="AddComment(commentForm)" *ngIf="token">
+                    <div class="col-12 row">
+                        <div class="col-10">
+                            <mdb-form-control>
+                                <input mdbInput type="text" name="content" #content="ngModel" ngModel  class="form-control" />
+                                <label mdbLabel class="form-label" for="form1">votre commentaire ...</label>
+                              </mdb-form-control>
+                        </div>
+                       
+                       
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-primary">Commenter</button>
+                        </div>
+                  
+                
+                    </div>
+                </form>
+
+              </div>
+              <div class="p-2" *ngFor="let c of comments">
+              
+                <div class="">
+                  <span class="badge badge-primary me-3">  {{ getUserName(c.user_id) }}</span><i *ngIf="c.user_id == userId" (click)="openEdit(content,c)" class="fas fa-edit text-success me-3"></i><i *ngIf="c.user_id == userId" (click)="deleteComment(c.id)" class="fas fa-trash-alt text-danger"></i> <p class="card mt-2 p-2"> {{ c.content }} </p>
+                </div>
+
+              </div>
+
+             </div>  
+
+           </div>
+       
+     
+
+    </div>
+    
+
+</div>
+</div>
+<app-footer></app-footer>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modifier commentaire</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+<form #uodatecommentForm="ngForm" (ngSubmit)="UpdateComment(uodatecommentForm)" >
+  <div class="col-12 row">
+      <div class="col-9">
+          <mdb-form-control>
+              <input mdbInput type="text" name="content" [ngModel]="UpdatedComment.content" ngModel  class="form-control" />
+              
+            </mdb-form-control>
+      </div>
+     
+     
+      <div class="col-3">
+          <button type="submit" class="btn btn-primary">Modifier</button>
+      </div>
+
+
+  </div>
+</form>
+</div>
+        
+</ng-template>
+

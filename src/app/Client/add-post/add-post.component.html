@@ -1,0 +1,89 @@
+<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-primary text-white  border-right" id="sidebar-wrapper" [ngClass]="status ? 'hide' : 'show'">
+        <div class="sidebar-heading text-center">Gestions des livres </div>
+        <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/">Accueil</a>
+            <a href="#" class="list-group-item list-group-item-action bg-primary text-white activated"
+                routerLink="/client/posts">Mes Publications</a>
+                <a href="#" class="list-group-item list-group-item-action bg-primary text-white"
+                routerLink="/client/posts/all">Tout Publications</a>
+            <a href="#" class="list-group-item list-group-item-action bg-primary text-white"
+                routerLink="/client/profile">Profile</a>
+
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+                <button class="btn btn-default" (click)="clickEvent()"><i class="fas fa-exchange-alt"></i></button>
+                <!-- Toggle button -->
+                <button class="navbar-toggler" type="button" (click)="rightAligned.toggle()"
+                    aria-controls="navbarRightAlignExample" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Collapsible wrapper -->
+                <div class="collapse navbar-collapse" id="navbarRightAlignExample" mdbCollapse
+                    #rightAligned="mdbCollapse">
+                    <!-- Left links -->
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" (click)="logout()"><i
+                                    class="fas fa-sign-out-alt"></i> Logout</a>
+                        </li>
+
+                    </ul>
+                    <!-- Left links -->
+                </div>
+                <!-- Collapsible wrapper -->
+            </div>
+            <!-- Container wrapper -->
+        </nav>
+
+
+        <div class="container-fluid">
+
+            <div class="card text-center m-3">
+                <div class="card-header">Ajouter une publication</div>
+                <div class="card-body text-left">
+
+
+                    <div class="col-12 row">
+                        <form #addPostForm="ngForm" (ngSubmit)="AddPost(addPostForm)">
+                            <mdb-form-control class="mb-3">
+                                <input mdbInput type="text" name="title" ngModel #title="ngModel" class="form-control"
+                                    placeholder="titre de publication ..." />
+
+                            </mdb-form-control>
+
+                            <mdb-form-control class="mb-2">
+                                <textarea mdbInput class="form-control" name="description" ngModel
+                                    #description="ngModel" rows="4"></textarea>
+                                <label mdbLabel class="form-label">Contenu de publication ....</label>
+                            </mdb-form-control>
+
+                            <button type="submit" class="btn btn-info me-2 text-white"> Enregistrer</button>
+                            <button type="reset" class="btn btn-danger">Effacer </button>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    
+</div>
+<!-- /#page-content-wrapper -->
+
+</div>

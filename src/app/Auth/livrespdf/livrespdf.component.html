@@ -1,0 +1,63 @@
+<app-header></app-header>
+
+<div class="conatiner p-5 mt-5">
+    <form #filtreForm="ngForm" (ngSubmit)="filtreBooks(filtreForm)">
+    <div class="col-12 row">
+        
+        <div class="col-5">
+            <select name="type" #type="ngModel" ngModel class="form-control">
+                <option value="">Choisir un type</option>
+                <option value="historique">Historique</option>
+                <option value="roman">Roman</option>
+            </select>
+        </div>
+        <div class="col-5">
+            <select name="langue" #langue="ngModel" ngModel class="form-control">
+                <option value="">Choisir une langue</option>
+                <option value="ar">Arabe</option>
+                <option value="fr">Francais</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+        </div>
+  
+
+    </div>
+</form>
+<div class="row col-12">
+    <div class="col-12 mb-2 row p-2">
+       <div class="col-4" *ngFor="let book of books">
+              <div class="p-4 text-center">
+                <div class="card">
+                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                      <img
+                        src="http://127.0.0.1:8000/uploads/livres/cover/{{ book.cover }}"
+                        class="img-fluid"
+                      />
+                      <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                      </a>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{ book.name }}</h5>
+                      <p class="card-text">
+                                {{book.description}}
+                      </p>
+                      <a  routerLink="/livre/{{ book.id }}" class="btn btn-primary">Afficher</a>
+                    </div>
+                  </div>
+               </div>
+        </div>
+       
+     
+
+    </div>
+    
+
+</div>
+</div>
+<app-footer></app-footer>
+
+
+

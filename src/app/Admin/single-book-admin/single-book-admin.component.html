@@ -1,0 +1,135 @@
+<div class="d-flex" id="wrapper" >
+
+    <!-- Sidebar -->
+    <div class="bg-primary text-white  border-right" id="sidebar-wrapper"  [ngClass]="status ? 'hide' : 'show'">
+      <div class="sidebar-heading text-center">Gestions des livres </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/" >Accueil</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white activated" routerLink="/admin/books/pdf" >Livres PDF</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/admin/books/audio" >Livres audio</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/admin/users">Utilisateurs</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/admin/posts">Publications</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/admin/profile">Profile</a>
+        
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+  
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+                <button class="btn btn-default" (click)="clickEvent()"><i class="fas fa-exchange-alt"></i></button>
+              <!-- Toggle button -->
+              <button
+                class="navbar-toggler"
+                type="button"
+                (click)="rightAligned.toggle()"
+                aria-controls="navbarRightAlignExample"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <i class="fas fa-bars"></i>
+              </button>
+          
+              <!-- Collapsible wrapper -->
+              <div
+                class="collapse navbar-collapse"
+                id="navbarRightAlignExample"
+                mdbCollapse
+                #rightAligned="mdbCollapse"
+              >
+                <!-- Left links -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                  </li>
+                  
+                </ul>
+                <!-- Left links -->
+              </div>
+              <!-- Collapsible wrapper -->
+            </div>
+            <!-- Container wrapper -->
+          </nav>
+     
+  
+      <div class="container-fluid">
+             
+        <div class="card text-center m-3">
+            <div class="card-header">{{ book.name }}</div>
+            <div class="card-body text-left">
+           
+
+           <div class="col-12 row">
+            <div class="col-6" >
+                <div class="card">
+                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                      <img 
+                        src="http://127.0.0.1:8000/uploads/livres/cover/{{ book.cover }}"
+                        class="img-fluid"
+                      />
+                      <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                      </a>
+                    </div>
+                    <div class="card-body">
+                       
+                      <h5 class="card-title">Title : {{ book.name }}</h5>
+                
+                  
+                      <h5>Description : </h5>
+                      <p class="card-text">
+                        {{ book.description  }}
+                      </p>
+                      <h5> {{ book.edition }} </h5>
+                      <h5> Langue : {{ book.langue }} </h5>
+                      <h5> Type : {{ book.type }} </h5>
+
+                
+                        
+                    
+                    </div>
+
+                    <div class="card-footer">
+                      <audio controls *ngIf="book.son">
+                       
+                        <source src="http://127.0.0.1:8000/uploads/livres/son/{{ book.son }}" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                      </audio>
+
+                      <a href="http://127.0.0.1:8000/uploads/livres/pdf/{{ book.pdf }}" class="btn btn-primary" *ngIf="book.pdf">Afficher PDF</a>
+                       
+                    </div>
+
+                  
+                  </div>
+               </div>
+             <div class="col-6">
+              <h3>Commentaires</h3>
+              <hr />
+              <div class="p-2" *ngFor="let c of comments">
+              
+                <div class="">
+                  <span class="badge badge-primary me-3">  {{ getUserName(c.user_id) }}</span><i (click)="deleteComment(c.id)" class="fas fa-trash-alt text-danger"></i> <p class="card mt-2 p-2"> {{ c.content }} </p>
+                </div>
+
+              </div>
+
+             </div>  
+
+           </div>
+            </div>
+         
+          </div>
+
+
+       
+        
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+  
+  </div>
+  

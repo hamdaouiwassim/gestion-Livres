@@ -1,0 +1,52 @@
+<app-header></app-header>
+<div class="conatiner p-3">
+    
+    <div class="col-8 offset-2 p-2">
+<h2 class="text-center"><i class="fas fa-user-plus"></i></h2>
+        <h3 class="text-center m-3"> Registration Page</h3>
+
+
+        <form #registerForm="ngForm" (ngSubmit)="addUser(registerForm)" >
+        <mdb-form-control class="mb-3">
+            <input mdbInput type="text" name="username" ngModel #username="ngModel"  class="form-control" />
+            <label mdbLabel class="form-label" for="form1">Username</label>
+          </mdb-form-control>
+
+          <mdb-form-control class="mb-3">
+            <input mdbInput type="text" name="email" ngModel #email="ngModel"  class="form-control" />
+            <label mdbLabel class="form-label" for="form1">Email</label>
+          </mdb-form-control>
+
+
+          <mdb-form-control class="mb-3">
+            <input mdbInput type="password" name="password" ngModel #password="ngModel"  class="form-control" />
+            <label mdbLabel class="form-label" for="form1">Password</label>
+          </mdb-form-control>
+          <mdb-form-control class="mb-3">
+            <input mdbInput type="text" name="nom" ngModel #nom="ngModel"  class="form-control" />
+            <label mdbLabel class="form-label" for="form1">Nom</label>
+        </mdb-form-control>
+        <mdb-form-control class="mb-3">
+          <input mdbInput type="text" name="prenom" ngModel #prenom="ngModel"  class="form-control" />
+          <label mdbLabel class="form-label" for="form1">Prenom</label>
+      </mdb-form-control>
+      <mdb-form-control class="mb-3">
+        <input mdbInput type="text" name="adresse" ngModel #adresse="ngModel"  class="form-control" />
+        <label mdbLabel class="form-label" for="form1">Adresse</label>
+    </mdb-form-control>
+        <button type="submit" class="btn btn-info me-2"> Sign up</button>
+        <button type="reset" class="btn btn-danger">Reset </button>
+   
+        </form>
+    </div>
+  
+</div>
+
+
+
+
+
+  
+
+   
+

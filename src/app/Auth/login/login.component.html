@@ -1,0 +1,39 @@
+<app-header></app-header>
+<div class="conatiner p-3">
+    
+    <div class="col-8 offset-2 p-2">
+<h2 class="text-center"><i class="fas fa-user-plus"></i></h2>
+        <h3 class="text-center m-3"> Login Page</h3>
+
+
+        <form #loginForm="ngForm" (ngSubmit)="LoginUser(loginForm)" >
+  
+
+          <mdb-form-control class="mb-3">
+            <input mdbInput type="text" name="email" ngModel #email="ngModel"  class="form-control" />
+            <label mdbLabel class="form-label" for="form1">Email</label>
+          </mdb-form-control>
+
+
+          <mdb-form-control class="mb-3">
+            <input mdbInput type="password" name="password" ngModel #password="ngModel"  class="form-control" />
+            <label mdbLabel class="form-label" for="form1">Password</label>
+          </mdb-form-control>
+       
+        <button type="submit" class="btn btn-info me-2"> Login</button>
+        <button type="reset" class="btn btn-danger">Reset </button>
+   
+        </form>
+    </div>
+  
+</div>
+
+
+
+
+
+  
+
+   
+
+

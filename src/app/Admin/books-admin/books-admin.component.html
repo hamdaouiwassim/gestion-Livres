@@ -1,0 +1,270 @@
+<div class="d-flex" id="wrapper" >
+
+    <!-- Sidebar -->
+    <div class="bg-primary text-white  border-right" id="sidebar-wrapper"  [ngClass]="status ? 'hide' : 'show'">
+      <div class="sidebar-heading text-center">Gestions des livres </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/" >Accueil</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white activated" routerLink="/admin/books/pdf" >Livres PDF</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/admin/books/audio" >Livres audio</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/admin/users">Utilisateurs</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/admin/posts">Publications</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" routerLink="/admin/profile">Profile</a>
+        
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+  
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+                <button class="btn btn-default" (click)="clickEvent()"><i class="fas fa-exchange-alt"></i></button>
+              <!-- Toggle button -->
+              <button
+                class="navbar-toggler"
+                type="button"
+                (click)="rightAligned.toggle()"
+                aria-controls="navbarRightAlignExample"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <i class="fas fa-bars"></i>
+              </button>
+          
+              <!-- Collapsible wrapper -->
+              <div
+                class="collapse navbar-collapse"
+                id="navbarRightAlignExample"
+                mdbCollapse
+                #rightAligned="mdbCollapse"
+              >
+                <!-- Left links -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                  </li>
+                  
+                </ul>
+                <!-- Left links -->
+              </div>
+              <!-- Collapsible wrapper -->
+            </div>
+            <!-- Container wrapper -->
+          </nav>
+     
+  
+      <div class="container-fluid">
+             
+        <div class="card text-center m-3">
+            <div class="card-header">Liste des livres</div>
+            <div class="card-body text-left">
+           <button class="btn btn-primary" (click)="open(content)">Ajouter un livre</button>
+           <hr />
+
+           <div class="col-12 row">
+               <div class="col-4" *ngFor="let book of books">
+                <div class="card">
+                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                      <img
+                        src="http://127.0.0.1:8000/uploads/livres/cover/{{ book.cover }}"
+                        class="img-fluid"
+                      />
+                      <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                      </a>
+                    </div>
+                    <div class="card-body">
+                       
+                      <h5 class="card-title">{{ book.name }}</h5>
+                
+                  
+                  
+                      <p class="card-text">
+                        {{ book.description |  slice:0:140 }}
+                      </p>
+                      <a  class="btn btn-secondary me-2" routerLink="/admin/book/{{ book.id }}"><i class="fas fa-eye"></i></a>
+                      <a  (click)="openEdit(updateLivre,book)" class="btn btn-success me-2"><i class="fas fa-edit"></i></a>
+                      <a (click)="deleteBook(book.id)" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </div>
+               </div>
+               
+
+           </div>
+            </div>
+         
+          </div>
+
+
+       
+        
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+  
+  </div>
+  
+    <!-- /#wrapper -->
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Ajouter un livre</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <form #addBookForm="ngForm" (ngSubmit)="AddBook(addBookForm)" >
+                <mdb-form-control class="mb-3">
+                    <input mdbInput type="text" name="name" ngModel #name="ngModel"  class="form-control" placeholder="title de livre ..." />
+                    
+                  </mdb-form-control>
+                  <mdb-form-control class="mb-3">
+                    <input mdbInput type="text" name="edition" ngModel #edition="ngModel"  class="form-control" placeholder="edition de livre ..." />
+                    
+                  </mdb-form-control>
+                 
+                  <mdb-form-control>
+                    <textarea mdbInput class="form-control" name="description" ngModel #description="ngModel" rows="4"></textarea>
+                    <label mdbLabel class="form-label"   >Description de livre ....</label>
+                  </mdb-form-control>
+                  <div class="mb-2">
+                            <label class="form-label" for="customFile">Coverture de livre</label>
+                            <input (change)="onSelectCover($event)" type="file" class="form-control" name="cover" ngModel #cover="ngModel"  />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="customFile">Fichier PDF</label>
+                        <input (change)="onSelectPDF($event)" type="file" class="form-control" name="pdf" ngModel #pdf="ngModel"  />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label" for="customFile">Langue de livre</label>
+                  <select name="langue" ngModel #langue="ngModel" class="form-control">
+                    <option value="ar">Arabe</option>
+                    <option value="fr">Francais</option>
+                  </select> 
+
+                </div>
+                <div class="mb-2">
+                  <label class="form-label" for="customFile">Type de livre</label>
+                  <select name="type" ngModel #type="ngModel" class="form-control">
+                    <option value="historique">Historique</option>
+                    <option value="roman">Roman</option>
+                  </select> 
+
+                </div>
+                <!-- <div class="mb-2">
+                    <label class="form-label" for="customFile">Fichier Son</label>
+                    <input (change)="onSelectFile($event)" type="file" class="form-control" name="son" ngModel #son="ngModel"  />
+            </div> -->
+        
+              
+          
+                <button type="submit" class="btn btn-info me-2 text-white"> Enregistrer</button>
+                <button type="reset" class="btn btn-danger">Effacer </button>
+           
+                </form>
+        </div>
+        
+      </ng-template>
+     
+  
+      
+    <!-- /#wrapper -->
+     <ng-template #updateLivre let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ajouter un livre</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          <form #updateBookForm="ngForm" (ngSubmit)="UpdateBook(updateBookForm)" >
+              <mdb-form-control class="mb-3">
+                  <input mdbInput type="text" name="name" [ngModel]="UpdatedLivre.name"   class="form-control" placeholder="title de livre ..." />
+                  
+                </mdb-form-control>
+                <mdb-form-control class="mb-3">
+                  <input mdbInput type="text" name="edition" [ngModel]="UpdatedLivre.edition"  class="form-control" placeholder="edition de livre ..." />
+                  
+                </mdb-form-control>
+               
+                <mdb-form-control>
+                  <textarea mdbInput class="form-control" name="description" [ngModel]="UpdatedLivre.description" rows="4"></textarea>
+                  
+                </mdb-form-control>
+                <div class="mb-2">
+                          <label class="form-label" for="customFile">Coverture de livre</label>
+                          <input (change)="onSelectCover($event)" type="file" class="form-control" name="cover" ngModel #cover="ngModel"  />
+                  </div>
+                  <div class="mb-2">
+                      <label class="form-label" for="customFile">Fichier PDF</label>
+                      <input (change)="onSelectPDF($event)" type="file" class="form-control" name="pdf" ngModel #pdf="ngModel"  />
+              </div>
+              <div class="mb-2">
+                <label class="form-label" for="customFile">Langue de livre</label>
+                <select name="langue" [ngModel]="UpdatedLivre.langue" class="form-control">
+                  <option value="ar">Arabe</option>
+                  <option value="fr">Francais</option>
+                </select> 
+
+              </div>
+              <div class="mb-2">
+                <label class="form-label" for="customFile">Type de livre</label>
+                <select name="type" [ngModel]="UpdatedLivre.type" class="form-control">
+                  <option value="historique">Historique</option>
+                  <option value="roman">Roman</option>
+                </select> 
+
+              </div>
+            
+      
+            
+        
+              <button type="submit" class="btn btn-info me-2 text-white"> Modifier</button>
+              <button type="reset" class="btn btn-danger">Effacer </button>
+         
+              </form>
+      </div>
+      
+    </ng-template>
+   
+ 
+
+        <!-- /#wrapper
+    <ng-template #updatecourse let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Update Course</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <form #UpdateCourseForm="ngForm" (ngSubmit)="UpdateCourse(UpdateCourseForm)" >
+                <mdb-form-control class="mb-3">
+                    <input mdbInput type="text" name="nom" [ngModel]="UpdatedCourse.nom"  class="form-control" placeholder="Course name ..." />
+                    
+                  </mdb-form-control>
+                  <mdb-form-control class="mb-3">
+                    <input mdbInput type="number" name="price" [ngModel]="UpdatedCourse.price"  class="form-control" placeholder="Course price ..." />
+                    
+                  </mdb-form-control>
+                  <mdb-form-control class="mb-2">
+                    <textarea mdbInput class="form-control" name="description" [ngModel]="UpdatedCourse.description" rows="4"></textarea>
+                   
+                  </mdb-form-control>
+                
+        
+              
+                <input type="hidden" name="id"  [ngModel]="UpdatedCourse.id">
+                <button type="submit" class="btn btn-info me-2 text-white"> Save</button>
+                <button type="reset" class="btn btn-danger">Reset </button>
+           
+                </form>
+        </div>
+        
+      </ng-template>
+       -->
